@@ -9,15 +9,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: "Checkout"
+    - name: Checkout
       uses: actions/checkout@v6
-    - name: "Cache setup"
+    - name: Cache setup
       id: cache-setup
       run: |
         mkdir -p "$HOME"/.cache/xml2rfc
         echo "::set-output name=path::$HOME/.cache/xml2rfc"
         date -u "+::set-output name=date::%FT%T"
-    - name: "Cache references"
+    - name: Cache references
       uses: actions/cache@v5
       with:
         path: ${{ steps.cache-setup.outputs.path }}
@@ -25,11 +25,11 @@ jobs:
         restore-keys: |
           refcache-${{ steps.cache-setup.outputs.date }}
           refcache-
-    - name: "Assemble draft"
+    - name: Assemble draft
       run: |
           awk 'FNR==1 && NR!=1 {printf "\n"} 1' src/*.md > draft-stb-tls13.md
           cp -f scripts/makefile .
-    - name: "Build draft"
+    - name: Build draft
       uses: martinthomson/i-d-template@v1
     - name: Upload artifact
       uses: actions/upload-artifact@v4
@@ -48,11 +48,11 @@ jobs:
     - name: Display structure of downloaded files
       run: ls -r
     - name: Create release
-      run: |
-        gh release create "$TAG" --generate-notes
+      uses: softprops/action-gh-release@v3
+      with:
+        generate_release_notes: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        tag: ${{ github.ref_name }}
     - name: Upload html asset
       uses: actions/upload-release-asset@v1
       env:
