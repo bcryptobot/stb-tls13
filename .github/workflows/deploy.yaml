@@ -54,23 +54,8 @@ jobs:
       uses: softprops/action-gh-release@v3
       with:
         generate_release_notes: true
+        files: |
+          draft-stb-tls13.html
+          draft-stb-tls13.txt
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    - name: Upload html asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./draft-stb-tls13.html
-        asset_name: draft-stb-tls13.html
-        asset_content_type: application/html
-    - name: Upload txt asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./draft-stb-tls13.txt
-        asset_name: draft-stb-tls13.txt
-        asset_content_type: application/txt
