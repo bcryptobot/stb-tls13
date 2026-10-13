@@ -55,6 +55,7 @@ jobs:
       with:
         generate_release_notes: true
         files: |
+          draft-stb-tls13.md
           draft-stb-tls13.html
           draft-stb-tls13.txt
       env:
