@@ -48,15 +48,11 @@ jobs:
     - name: Display structure of downloaded files
       run: ls -r
     - name: Create release
-      id: create_release
-      uses: actions/create-release@v1
+      run: |
+        gh release create "$TAG" --generate-notes
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: ${{ github.ref }}
-        draft: false
-        prerelease: false
+        tag: ${{ github.ref_name }}
     - name: Upload html asset
       uses: actions/upload-release-asset@v1
       env:
